@@ -1,0 +1,36 @@
+# Project 02.2020. 
+#
+# Offline Traccar Project 
+# Offline Tile Server
+
+
+# Cent OS 8 install
+# Disable ipv6
+# Enable EPEL
+# Install Traccar
+# SCP modded Traccar
+# install Docker
+
+# osm
+wget -c https://download.geofabrik.de/europe-latest.osm.pbf
+
+# Build map:
+
+docker run \
+    -e UPDATES=enabled \
+    -e THREADS=24 \
+    -v /home/kz/Downloads/europe-latest.osm.pbf:/data.osm.pbf \
+    -v openstreetmap-data:/var/lib/postgresql/12/main \
+    overv/openstreetmap-tile-server \
+    import
+    
+# Start server:
+
+docker run \
+    -p 80:80 \
+    -p 5432:5432 \
+    -e THREADS=24 \
+    -e UPDATES=enabled \
+    -v openstreetmap-data:/var/lib/postgresql/12/main \
+    -d overv/openstreetmap-tile-server \
+    run
