@@ -6,7 +6,7 @@ FROM ubuntu:18.04
 # Set up environment
 ENV TZ=UTC
 ENV AUTOVACUUM=on
-ENV UPDATES=disabled
+ENV UPDATES=enabled
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install dependencies
