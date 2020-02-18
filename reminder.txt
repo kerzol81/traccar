@@ -38,3 +38,8 @@ docker run \
     -v openstreetmap-data:/var/lib/postgresql/12/main \
     -d overv/openstreetmap-tile-server \
     run
+
+
+# Traccar custom map field: (127.0.0.1 or localhost does't work)
+
+http://IP/tile/{z}/{x}/{y}.png
