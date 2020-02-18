@@ -9,10 +9,13 @@
 # Enable EPEL
 # Install Traccar
 # SCP modded Traccar
-# install Docker
+# Install Docker
 
 # osm
 wget -c https://download.geofabrik.de/europe-latest.osm.pbf
+
+# osm docker image
+https://github.com/Overv/openstreetmap-tile-server
 
 # Build map:
 
