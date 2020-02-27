@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# create volume:
+
+docker volume create osm-malta
+
+# import:
+
+docker run \
+    -e UPDATES=enabled \
+    -e THREADS=24 \
+    -e DOWNLOAD_PBF=http://download.geofabrik.de/europe/malta-latest.osm.pbf \
+    -e DOWNLOAD_POLY=http://download.geofabrik.de/europe/malta.poly \    
+    -v osm-malta:/var/lib/postgresql/12/main \
+    -d overv/openstreetmap-tile-server \
+    import
+
+# Start server:
+
+docker run \
+    -p 80:80 \
+    -p 5432:5432 \
+    -e THREADS=24 \
+    -e "OSM2PGSQL_EXTRA_ARGS=-C 4096" \
+    -e UPDATES=enabled \
+    -v osm-malta:/var/lib/postgresql/12/main \
+    -v openstreetmap-rendered-tiles:/var/lib/mod_tile \
+    -d overv/openstreetmap-tile-server \
+    run
+
+
+# Traccar custom map field:
+
+#http://<IP>#/tile/{z}/{x}/{y}.png
